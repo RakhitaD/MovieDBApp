@@ -8,11 +8,90 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+  
+  <ion-list radio-group [(ngModel)]="categorySelected">
+    <ion-row>
+      <ion-col col-6>
+        <ion-item checked="true">
+          <ion-label>Movies</ion-label>
+          <ion-radio value="movies" ></ion-radio>
+        </ion-item>
+      </ion-col>
+      <ion-col col-6>
+        <ion-item>
+          <ion-label>TV Shows</ion-label>
+          <ion-radio value="tv"></ion-radio>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+  <ion-item (click)="onMovieLoad()">
+    <ion-input type="text" [(ngModel)]="movieTitle" (keyup)="onFindMovieandTv()" placeholder="Search your favorite Movie/TV show..."></ion-input>
+  </ion-item>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <ion-list>
+      <ion-card *ngFor="let upcomingMovie of nowShowing$ | async ">
+        <ion-item>
+          <h2><b>{{upcomingMovie.title}}</b></h2>
+        </ion-item>
+        <img src="http://image.tmdb.org/t/p/w500/{{upcomingMovie.poster_path}}" width="95%" height="250px">
+        <ion-card-content>
+            <p>{{upcomingMovie.overview}}</p>
+        </ion-card-content>
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-start clear small>
+              <ion-icon name="thumbs-up"></ion-icon>
+              <div>{{upcomingMovie.vote_count}}</div>
+            </button>
+          </ion-col>
+          <ion-col>
+            <button ion-button icon-start clear small>
+              <ion-icon name="text"></ion-icon>
+              <div>{{upcomingMovie.vote_average}}</div>
+            </button>
+          </ion-col>
+          <ion-col center text-center>
+            <ion-note>
+              {{upcomingMovie.release_date}}
+            </ion-note>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+  </ion-list>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+
+
+  <p *ngIf="noofMovies > 0">{{noofMovies}} found matching your search '{{movieTitle}}'</p>
+  <ng-template *ngIf="movieTitle">No movies found matching your search.</ng-template>
+
+  <p *ngIf="noofTVShows > 0">{{noofTVShows}} found matching your search '{{movieTitle}}'</p>
+  <ng-template *ngIf="noofMovies == 0 && movieTitle">No TV shows found matching your search.</ng-template>
+  <ion-list>
+    <ion-item *ngFor="let movie of movies">
+      <ion-avatar item-start>
+        <img src="http://image.tmdb.org/t/p/w500/{{movie.poster_path}}">
+      </ion-avatar>
+      <h2>{{movie.title}}</h2>
+      <p>{{movie.overview}}</p>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-item *ngFor="let tvshow of tvShows">
+      <ion-avatar item-start *ngIf="tvshow.poster_path; else defaultPoster">
+        <img src="http://image.tmdb.org/t/p/w500/{{tvshow.poster_path}}">
+      </ion-avatar>
+      <ng-template #defaultPoster>
+        <ion-icon name="nuclear"></ion-icon>
+      </ng-template>
+      <h2>{{tvshow.name}} 
+        <ion-badge *ngIf="tvshow.vote_average > 7" item-end color="secondary">{{tvshow.vote_average}}</ion-badge>
+        <ion-badge *ngIf="tvshow.vote_average > 5 && tvshow.vote_average <= 7 " item-end color="warning">{{tvshow.vote_average}}</ion-badge>
+        <ion-badge *ngIf="tvshow.vote_average > 3 && tvshow.vote_average <= 5" item-end color="danger">{{tvshow.vote_average}}</ion-badge>
+        <ion-badge *ngIf="tvshow.vote_average > 0 && tvshow.vote_average <= 3" item-end color="dark">{{tvshow.vote_average}}</ion-badge>
+      </h2>
+      <p>{{tvshow.overview}}</p>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
