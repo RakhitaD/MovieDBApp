@@ -5,33 +5,33 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>MovieFinder</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Find Movies</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-    <ion-row>
-        <ion-col col-12>
-          <ion-item (click)="onMovieLoad()">
-            <ion-label floating>Movie Title</ion-label>
-            <ion-input type="text" [(ngModel)]="movieTitle" (keyup)="onFindMovieandTv()"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    
-      <p *ngIf="noofMovies > 0">{{noofMovies}} found matching your search '{{movieTitle}}'</p>
-      <ng-template *ngIf="movieTitle">No movies found matching your search.</ng-template>
-      <ion-list>
-        <ion-item *ngFor="let movie of movies">
-          <ion-avatar item-start>
-            <img src="http://image.tmdb.org/t/p/w500/{{movie.poster_path}}">
-          </ion-avatar>
-          <h2>{{movie.title}}</h2>
-          <p>{{movie.overview}}</p>
-        </ion-item>
-      </ion-list>
+  <ion-row>
+    <ion-col col-12>
+      <ion-item (click)="onMovieLoad()">
+        <ion-input type="text" [(ngModel)]="movieTitle" (keyup)="onFindMovie()" placeholder="Search your favorite Movie..."></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <p *ngIf="noofMovies > 0">{{noofMovies}} found matching your search '{{movieTitle}}'</p>
+  <ng-template *ngIf="movieTitle">No movies found matching your search.</ng-template>
+
+  <ion-list>
+    <ion-item *ngFor="let movie of movies">
+      <ion-avatar item-start>
+        <img src="http://image.tmdb.org/t/p/w500/{{movie.poster_path}}">
+      </ion-avatar>
+      <h2>{{movie.title}}</h2>
+      <p>{{movie.overview}}</p>
+    </ion-item>
+  </ion-list>
 </ion-content>

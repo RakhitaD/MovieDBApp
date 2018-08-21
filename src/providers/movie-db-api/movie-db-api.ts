@@ -36,6 +36,7 @@ export class MovieDbApiProvider {
   }
 
   getNowShowingNearMe(){
+    console.log('fetching now showing movies....');
     let nowShowingApiPath ='https://api.themoviedb.org/3/movie/now_playing?api_key='+
     this.apiKey+'&language=en-US';
 
@@ -43,5 +44,29 @@ export class MovieDbApiProvider {
       map(data => data['results'])
     );
   }
+
+  getUpcomingMovies() {
+    console.log('fetching upcoming movies...');
+    let upcomingMovieApiPath = '';
+  }
+
+  getMovie(id:number){
+    console.log('fetching a single movie with id :'+id);
+    let getMovieApiPath ='https://api.themoviedb.org/3/movie/'+id+'?api_key='+this.apiKey+'&language=en-US';
+
+    return this.http.get(getMovieApiPath).pipe(
+      map(data => data)
+    );
+  }
+
+  getMovieCredits(id:number){
+    let getMovieCreditApi ='https://api.themoviedb.org/3/movie/'+id+'/credits?api_key='+this.apiKey;
+
+    return this.http.get(getMovieCreditApi).pipe(
+      map(data => data['cast'])
+    );
+  }
+
+  
 
 }

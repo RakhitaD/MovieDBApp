@@ -3,51 +3,30 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title><ion-icon name="videocam" color="secondary"></ion-icon> &nbsp; {{ 'Movie Hut' | uppercase}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  
-  <ion-list radio-group [(ngModel)]="categorySelected">
-    <ion-row>
-      <ion-col col-6>
-        <ion-item checked="true">
-          <ion-label>Movies</ion-label>
-          <ion-radio value="movies" ></ion-radio>
-        </ion-item>
-      </ion-col>
-      <ion-col col-6>
-        <ion-item>
-          <ion-label>TV Shows</ion-label>
-          <ion-radio value="tv"></ion-radio>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-list>
-  <ion-item (click)="onMovieLoad()">
-    <ion-input type="text" [(ngModel)]="movieTitle" (keyup)="onFindMovieandTv()" placeholder="Search your favorite Movie/TV show..."></ion-input>
-  </ion-item>
-
-  <ion-list>
-      <ion-card *ngFor="let upcomingMovie of nowShowing$ | async ">
+  <ion-list *ngIf="!movieTitle">
+      <ion-card *ngFor="let upcomingMovie of nowShowing$ | async" (click)="onShowMovie(upcomingMovie.id)">
         <ion-item>
           <h2><b>{{upcomingMovie.title}}</b></h2>
         </ion-item>
-        <img src="http://image.tmdb.org/t/p/w500/{{upcomingMovie.poster_path}}" width="95%" height="250px">
+        <img src="http://image.tmdb.org/t/p/w500/{{upcomingMovie.backdrop_path}}" class="post_photo">
         <ion-card-content>
             <p>{{upcomingMovie.overview}}</p>
         </ion-card-content>
         <ion-row>
           <ion-col>
             <button ion-button icon-start clear small>
-              <ion-icon name="thumbs-up"></ion-icon>
+              <ion-icon name="people"></ion-icon>
               <div>{{upcomingMovie.vote_count}}</div>
             </button>
           </ion-col>
           <ion-col>
             <button ion-button icon-start clear small>
-              <ion-icon name="text"></ion-icon>
+              <ion-icon name="star-full"></ion-icon>
               <div>{{upcomingMovie.vote_average}}</div>
             </button>
           </ion-col>
@@ -58,40 +37,6 @@
           </ion-col>
         </ion-row>
       </ion-card>
-  </ion-list>
-
-
-
-  <p *ngIf="noofMovies > 0">{{noofMovies}} found matching your search '{{movieTitle}}'</p>
-  <ng-template *ngIf="movieTitle">No movies found matching your search.</ng-template>
-
-  <p *ngIf="noofTVShows > 0">{{noofTVShows}} found matching your search '{{movieTitle}}'</p>
-  <ng-template *ngIf="noofMovies == 0 && movieTitle">No TV shows found matching your search.</ng-template>
-  <ion-list>
-    <ion-item *ngFor="let movie of movies">
-      <ion-avatar item-start>
-        <img src="http://image.tmdb.org/t/p/w500/{{movie.poster_path}}">
-      </ion-avatar>
-      <h2>{{movie.title}}</h2>
-      <p>{{movie.overview}}</p>
-    </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-item *ngFor="let tvshow of tvShows">
-      <ion-avatar item-start *ngIf="tvshow.poster_path; else defaultPoster">
-        <img src="http://image.tmdb.org/t/p/w500/{{tvshow.poster_path}}">
-      </ion-avatar>
-      <ng-template #defaultPoster>
-        <ion-icon name="nuclear"></ion-icon>
-      </ng-template>
-      <h2>{{tvshow.name}} 
-        <ion-badge *ngIf="tvshow.vote_average > 7" item-end color="secondary">{{tvshow.vote_average}}</ion-badge>
-        <ion-badge *ngIf="tvshow.vote_average > 5 && tvshow.vote_average <= 7 " item-end color="warning">{{tvshow.vote_average}}</ion-badge>
-        <ion-badge *ngIf="tvshow.vote_average > 3 && tvshow.vote_average <= 5" item-end color="danger">{{tvshow.vote_average}}</ion-badge>
-        <ion-badge *ngIf="tvshow.vote_average > 0 && tvshow.vote_average <= 3" item-end color="dark">{{tvshow.vote_average}}</ion-badge>
-      </h2>
-      <p>{{tvshow.overview}}</p>
-    </ion-item>
   </ion-list>
 
 </ion-content>

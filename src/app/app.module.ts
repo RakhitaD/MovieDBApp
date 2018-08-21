@@ -10,12 +10,18 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { MovieDbApiProvider } from '../providers/movie-db-api/movie-db-api';
 import { HttpClientModule } from '../../node_modules/@angular/common/http';
+import { MovieDetailsPage } from '../pages/movie-details/movie-details';
+import { MovieFinderPage } from '../pages/movie-finder/movie-finder';
+import { TvShowFinderPage } from '../pages/tv-show-finder/tv-show-finder';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    MovieDetailsPage,
+    MovieFinderPage,
+    TvShowFinderPage
   ],
   imports: [
     BrowserModule,
@@ -26,7 +32,10 @@ import { HttpClientModule } from '../../node_modules/@angular/common/http';
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    MovieDetailsPage,
+    MovieFinderPage,
+    TvShowFinderPage
   ],
   providers: [
     StatusBar,
