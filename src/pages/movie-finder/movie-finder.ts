@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Movie } from '../../models/movie';
 import { MovieDbApiProvider } from '../../providers/movie-db-api/movie-db-api';
+import { MovieDetailsPage } from '../movie-details/movie-details';
 
 @IonicPage()
 @Component({
@@ -20,8 +21,9 @@ export class MovieFinderPage {
     console.log('movie finder page successfully loaded...');
   }
 
-  onMovieLoad(){
-
+  onLookupMovie(id:number){
+    console.log('look up movie',id);
+    this.navCtrl.push(MovieDetailsPage,{'id':id});
   }
 
   onFindMovie(){

@@ -13,6 +13,9 @@ import { HttpClientModule } from '../../node_modules/@angular/common/http';
 import { MovieDetailsPage } from '../pages/movie-details/movie-details';
 import { MovieFinderPage } from '../pages/movie-finder/movie-finder';
 import { TvShowFinderPage } from '../pages/tv-show-finder/tv-show-finder';
+import { ActorDetailsPage } from '../pages/actor-details/actor-details';
+import { ActorFinderPage } from '../pages/actor-finder/actor-finder';
+import { UpcomingMoviePage } from '../pages/upcoming-movie/upcoming-movie';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { TvShowFinderPage } from '../pages/tv-show-finder/tv-show-finder';
     ListPage,
     MovieDetailsPage,
     MovieFinderPage,
-    TvShowFinderPage
+    TvShowFinderPage,
+    ActorDetailsPage,
+    ActorFinderPage,
+    UpcomingMoviePage
   ],
   imports: [
     BrowserModule,
@@ -35,7 +41,10 @@ import { TvShowFinderPage } from '../pages/tv-show-finder/tv-show-finder';
     ListPage,
     MovieDetailsPage,
     MovieFinderPage,
-    TvShowFinderPage
+    TvShowFinderPage,
+    ActorDetailsPage,
+    ActorFinderPage,
+    UpcomingMoviePage
   ],
   providers: [
     StatusBar,

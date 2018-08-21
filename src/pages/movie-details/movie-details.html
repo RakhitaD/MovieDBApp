@@ -6,52 +6,52 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title *ngIf="movie">{{movie.title | uppercase}}</ion-title>
+    <ion-title *ngIf="movie">{{movie.title | uppercase}} ({{getMovieYear(movie)}})</ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content>
   <ion-card *ngIf="movie">
-    <ion-item padding>
+    <ion-item no-padding>
       <h2>
-        <b>{{movie.title | uppercase}}</b> 
-        <sup ion-text color="primary">
-          <ion-badge item-end color="secondary">
-            {{movie.vote_average | number:'1.2'}}
-          </ion-badge>
-        </sup>
+        <ion-row>
+            <ion-col>
+                <ion-icon name="star" color="warning"></ion-icon>
+                <ion-note>Rating</ion-note>
+            </ion-col>
+            <ion-col >
+              <ion-note>
+                  <ion-badge color="secondary">
+                      {{movie.vote_average | number:'1.2'}}
+                  </ion-badge>
+              </ion-note>
+            </ion-col>
+          </ion-row>
+        <ion-row>
+          <ion-col>
+              <ion-icon name="calendar" color="primary"></ion-icon>
+              <ion-note>Release Date</ion-note>
+          </ion-col>
+          <ion-col >
+            <ion-note>
+              {{movie.release_date}}
+            </ion-note>
+          </ion-col>
+        </ion-row>
       </h2>
     </ion-item>
     <img src="http://image.tmdb.org/t/p/w780/{{movie.poster_path}}" class="post_photo">
     <ion-card-content padding>
         <p>{{movie.overview}}</p>
     </ion-card-content>
-    <ion-row padding>
-      <ion-col>
-        <button ion-button icon-start clear small>
-          <ion-icon name="people"></ion-icon>
-          <div>{{movie.vote_count}}</div>
-        </button>
-      </ion-col>
-      <ion-col>
-        <button ion-button icon-start clear small>
-          <ion-icon name="star-half"></ion-icon>
-          <div>{{movie.vote_average}}</div>
-        </button>
-      </ion-col>
-      <ion-col center text-center>
-        <ion-note>
-          {{movie.release_date}}
-        </ion-note>
-      </ion-col>
-    </ion-row>
   </ion-card>
-  <button ion-button full color="warning" (click)="onShowCast()" >{{showCastText}}</button>
+  <button ion-button full round button-round-padding-bottom button-round-padding-top color="warning" 
+  (click)="onShowCast()" >{{showCastText}}</button>
   <ng-container *ngIf="showCast">
       <ion-row *ngFor="let movieCharacter of movieCharacter$ | async">
           <ion-col col-12>
-            <ion-list>
-              <ion-item *ngIf="movieCharacter.profile_path; else defaultImg">
+            <ion-list #characterList>
+              <ion-item *ngIf="movieCharacter.profile_path; else defaultImg" 
+              (click)="onLoadActorActress(movieCharacter.id)">
                 <ion-avatar item-start>
                   <img  src="http://image.tmdb.org/t/p/w500/{{movieCharacter.profile_path}}">
                 </ion-avatar>

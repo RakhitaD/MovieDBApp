@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { MovieFinderPage } from '../pages/movie-finder/movie-finder';
 import { TvShowFinderPage } from '../pages/tv-show-finder/tv-show-finder';
+import { ActorFinderPage } from '../pages/actor-finder/actor-finder';
+import { UpcomingMoviePage } from '../pages/upcoming-movie/upcoming-movie';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,9 +24,11 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'Find Movies', component: MovieFinderPage },
-      { title: 'Find TV Shows', component: TvShowFinderPage }
+      { title: 'Now Showing', component: HomePage },
+      { title: 'Upcoming Movies', component: UpcomingMoviePage },
+      { title: 'Find a Movie', component: MovieFinderPage },
+      { title: 'Find a TV Show', component: TvShowFinderPage },
+      { title: 'Look-up Actor/Actress', component: ActorFinderPage }
     ];
 
   }

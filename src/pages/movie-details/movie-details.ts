@@ -4,6 +4,7 @@ import { MovieDbApiProvider } from '../../providers/movie-db-api/movie-db-api';
 import { Movie } from '../../models/movie';
 import { MovieCharacter } from '../../models/movieCharacter';
 import { Observable } from '../../../node_modules/rxjs/Observable';
+import { ActorDetailsPage } from '../actor-details/actor-details';
 
 @IonicPage()
 @Component({
@@ -11,7 +12,6 @@ import { Observable } from '../../../node_modules/rxjs/Observable';
   templateUrl: 'movie-details.html',
 })
 export class MovieDetailsPage {
-
   movieId:number;
   movie:Movie;
   movieCharacter$:Observable<MovieCharacter>;
@@ -22,14 +22,12 @@ export class MovieDetailsPage {
 
     this.movieDbApi.getMovie(this.movieId).subscribe(data => {
       this.movie = data as Movie;
-
       if(!this.movie)
         return;
 
       this.movieCharacter$ = this.movieDbApi.getMovieCredits(this.movie.id) as Observable<MovieCharacter>;
 
     });
-
   }
 
   ionViewDidLoad() {
@@ -39,9 +37,18 @@ export class MovieDetailsPage {
   onShowCast(){
     this.showCast = !this.showCast;
     if(this.showCast)
-      this.showCastText = 'HIDE CAST...'
+      this.showCastText = 'HIDE CAST...';
     else
-      this.showCastText = 'SHOW CAST...'
+      this.showCastText = 'SHOW CAST...';
+  }
+
+  onLoadActorActress(id:number){
+    this.navCtrl.push(ActorDetailsPage,{'id':id});
+  }
+
+  getMovieYear(movie:Movie){
+    if(movie.release_date)
+      return movie.release_date.split('-')[0].toString();
   }
 
 }

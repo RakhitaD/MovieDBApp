@@ -13,7 +13,6 @@ export class HomePage {
 
   nowShowingMovies:Movie[]=[];
   nowShowing$;
-
   constructor(public navCtrl: NavController,private movieDBApi:MovieDbApiProvider) {
 
     this.nowShowing$ = this.movieDBApi.getNowShowingNearMe().pipe(take(1));
@@ -23,5 +22,9 @@ export class HomePage {
     this.navCtrl.push(MovieDetailsPage,{'id':id});
   }
 
+  getMovieYear(movie:Movie){
+    if(movie.release_date)
+      return movie.release_date.split('-')[0].toString();
+  }
 
 }

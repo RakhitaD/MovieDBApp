@@ -17,10 +17,8 @@ export class MovieDbApiProvider {
   }
 
   searchMovie(movieTitle){
-
     let searchApiPath = 'https://api.themoviedb.org/3/search/movie?api_key='+this.apiKey+'&query='+movieTitle;
     return this.http.get(searchApiPath);
-
   }
 
   searchTvShow(tvTitle){
@@ -39,7 +37,6 @@ export class MovieDbApiProvider {
     console.log('fetching now showing movies....');
     let nowShowingApiPath ='https://api.themoviedb.org/3/movie/now_playing?api_key='+
     this.apiKey+'&language=en-US';
-
     return this.http.get(nowShowingApiPath).pipe(
       map(data => data['results'])
     );
@@ -47,23 +44,48 @@ export class MovieDbApiProvider {
 
   getUpcomingMovies() {
     console.log('fetching upcoming movies...');
-    let upcomingMovieApiPath = '';
+    let upcomingMovieApiPath ='https://api.themoviedb.org/3/movie/upcoming?api_key='+
+    this.apiKey+'&language=en-US';
+    return this.http.get(upcomingMovieApiPath).pipe(
+      map(data => data['results'])
+    );
   }
 
   getMovie(id:number){
     console.log('fetching a single movie with id :'+id);
     let getMovieApiPath ='https://api.themoviedb.org/3/movie/'+id+'?api_key='+this.apiKey+'&language=en-US';
-
     return this.http.get(getMovieApiPath).pipe(
       map(data => data)
     );
   }
 
   getMovieCredits(id:number){
-    let getMovieCreditApi ='https://api.themoviedb.org/3/movie/'+id+'/credits?api_key='+this.apiKey;
-
-    return this.http.get(getMovieCreditApi).pipe(
+    let getMovieCreditApiPath ='https://api.themoviedb.org/3/movie/'+id+'/credits?api_key='+this.apiKey;
+    return this.http.get(getMovieCreditApiPath).pipe(
       map(data => data['cast'])
+    );
+  }
+
+  getActorActress(id:number){
+    let getPersonApiPath ='https://api.themoviedb.org/3/person/'+id+'?api_key='+this.apiKey;
+    return this.http.get(getPersonApiPath).pipe(
+      map(data => data)
+    );
+  }
+
+  searchActorActress(query:string){
+    let searchApiPath = 'https://api.themoviedb.org/3/search/person?api_key='+this.apiKey+'&query='+query;
+    return this.http.get(searchApiPath).pipe(
+      map(data => data)
+    );
+  }
+
+  getIndividualMovieCredit(id:number){
+    let individualMovieCreditApiPath = 'https://api.themoviedb.org/3/person/'
+    +id+'/movie_credits?api_key='+this.apiKey;
+
+    return this.http.get(individualMovieCreditApiPath).pipe(
+      map(data => data)
     );
   }
 

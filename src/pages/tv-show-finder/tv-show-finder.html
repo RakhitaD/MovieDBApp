@@ -9,7 +9,7 @@
       <button ion-button menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-      <ion-title>Find TV Shows</ion-title>
+      <ion-title>Find a TV Show</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -32,7 +32,9 @@
           <img src="http://image.tmdb.org/t/p/w500/{{tvshow.poster_path}}">
         </ion-avatar>
         <ng-template #defaultPoster>
-          <ion-icon name="nuclear"></ion-icon>
+          <ion-avatar  item-start>
+            <ion-icon name="nuclear"></ion-icon>
+          </ion-avatar>
         </ng-template>
         <h2>{{tvshow.name}} 
           <ion-badge *ngIf="tvshow.vote_average > 7" item-end color="secondary">{{tvshow.vote_average}}</ion-badge>

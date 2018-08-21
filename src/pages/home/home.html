@@ -3,40 +3,23 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title><ion-icon name="videocam" color="secondary"></ion-icon> &nbsp; {{ 'Movie Hut' | uppercase}}</ion-title>
+    <ion-title>
+      <ion-icon name="videocam" color="danger"></ion-icon> &nbsp; {{ 'Now Showing' | uppercase}}
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content no-padding >
   <ion-list *ngIf="!movieTitle">
-      <ion-card *ngFor="let upcomingMovie of nowShowing$ | async" (click)="onShowMovie(upcomingMovie.id)">
-        <ion-item>
-          <h2><b>{{upcomingMovie.title}}</b></h2>
-        </ion-item>
-        <img src="http://image.tmdb.org/t/p/w500/{{upcomingMovie.backdrop_path}}" class="post_photo">
-        <ion-card-content>
-            <p>{{upcomingMovie.overview}}</p>
-        </ion-card-content>
-        <ion-row>
-          <ion-col>
-            <button ion-button icon-start clear small>
-              <ion-icon name="people"></ion-icon>
-              <div>{{upcomingMovie.vote_count}}</div>
-            </button>
-          </ion-col>
-          <ion-col>
-            <button ion-button icon-start clear small>
-              <ion-icon name="star-full"></ion-icon>
-              <div>{{upcomingMovie.vote_average}}</div>
-            </button>
-          </ion-col>
-          <ion-col center text-center>
-            <ion-note>
-              {{upcomingMovie.release_date}}
-            </ion-note>
-          </ion-col>
-        </ion-row>
-      </ion-card>
+    <ion-card *ngFor="let nowShowingMovie of nowShowing$ | async" 
+    (click)="onShowMovie(nowShowingMovie.id)" color="light">
+      <ion-item color="warning" >
+          <b>{{nowShowingMovie.title}} ({{getMovieYear(nowShowingMovie)}})</b>
+          <ion-badge item-end color="secondary" >
+            {{nowShowingMovie.vote_average | number:'1.2'}}
+          </ion-badge>
+      </ion-item>
+      <img padding src="http://image.tmdb.org/t/p/w500/{{nowShowingMovie.backdrop_path}}" class="post_photo">
+    </ion-card>
   </ion-list>
-
 </ion-content>
